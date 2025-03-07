@@ -1,3 +1,5 @@
+import os
+import sys
 import requests
 from bs4 import BeautifulSoup
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -41,50 +43,24 @@ def ai_analysis(vulnerabilities):
 
 def main():
     print("AI-Powered Web Application Vulnerability Scanner")
-    target_url = input("Enter the target URL: ").strip()
+    target_url = os.getenv(http://localhost:3001) or (sys.argv[1] if len(sys.argv) > 1 else None)
+    if not target_url:
+        raise ValueError("Target URL is not provided.")
+    print(f"Scanning target URL: {http://localhost:3001}")
     vulnerabilities = []
 
-    # Scanning for SQL Injection
-from scanners.sql_injection import scan_sql_injection  # Existing module
-from scanners.xss import scan_xss  # Existing module
-from scanners.csrf import scan_csrf  # New CSRF module
-from scanners.ssrf import scan_ssrf  # New SSRF module
-
-def ai_analysis(vulnerabilities):
-    """Placeholder function for AI analysis."""
-    print("\nAI Analysis Report:")
-    for vuln in vulnerabilities:
-        print(f"[AI] Detected {vuln}. Further analysis required.")
-
-def main():
-    print("AI-Powered Web Application Vulnerability Scanner")
-    target_url = input("Enter the target URL: ").strip()
-    vulnerabilities = []
-
-    # Scan for SQL Injection
-    print("\nScanning for SQL Injection...")
+    # Scanning for SQL Injection, XSS, CSRF, and SSRF
     if scan_sql_injection(target_url):
         vulnerabilities.append('SQL Injection')
-
-    # Scan for XSS
-    print("\nScanning for XSS...")
     if scan_xss(target_url):
         vulnerabilities.append('XSS')
-
-    # Scan for CSRF
-    print("\nScanning for CSRF...")
     if scan_csrf(target_url):
         vulnerabilities.append('CSRF')
-
-    # Scan for SSRF
-    print("\nScanning for SSRF...")
     if scan_ssrf(target_url):
         vulnerabilities.append('SSRF')
 
     # AI Analysis of vulnerabilities
-    print("\nRunning AI Analysis...")
     ai_analysis(vulnerabilities)
 
 if __name__ == "__main__":
     main()
-
