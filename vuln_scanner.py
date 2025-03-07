@@ -43,23 +43,34 @@ def ai_analysis(vulnerabilities):
 
 def main():
     print("AI-Powered Web Application Vulnerability Scanner")
-    target_url = os.getenv(http://localhost:3001) or (sys.argv[1] if len(sys.argv) > 1 else None)
+    target_url = os.getenv('TARGET_URL') or (sys.argv[1] if len(sys.argv) > 1 else None)
     if not target_url:
         raise ValueError("Target URL is not provided.")
-    print(f"Scanning target URL: {http://localhost:3001}")
+    print(f"Scanning target URL: {target_url}")
     vulnerabilities = []
 
-    # Scanning for SQL Injection, XSS, CSRF, and SSRF
+    # Scan for SQL Injection
+    print("\nScanning for SQL Injection...")
     if scan_sql_injection(target_url):
         vulnerabilities.append('SQL Injection')
+
+    # Scan for XSS
+    print("\nScanning for XSS...")
     if scan_xss(target_url):
         vulnerabilities.append('XSS')
+
+    # Scan for CSRF
+    print("\nScanning for CSRF...")
     if scan_csrf(target_url):
         vulnerabilities.append('CSRF')
+
+    # Scan for SSRF
+    print("\nScanning for SSRF...")
     if scan_ssrf(target_url):
         vulnerabilities.append('SSRF')
 
     # AI Analysis of vulnerabilities
+    print("\nRunning AI Analysis...")
     ai_analysis(vulnerabilities)
 
 if __name__ == "__main__":
